@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import NavBar from "./components/navbar";
 import Button from "@material-ui/core/Button";
 import TaskList from "./components/taskList";
+import Task from "./components/task";
 import "./App.css";
 
 
@@ -64,6 +65,7 @@ class App extends Component {
 					</div>
 				</form>
 				<TaskList entries={this.state.open}></TaskList>
+				<Task text="test task"></Task>
 		  	</div>
 	  	);
   	}

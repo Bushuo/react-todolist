@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { Checkbox } from "@material-ui/core";
+import { Checkbox, FormControlLabel } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Radio from '@material-ui/core/Radio';
 
@@ -42,11 +42,20 @@ class Task extends Component {
 				</div>
 				
 				<div className="task__description">{this.props.text}</div>
-
-				<div className="task__controls">
-					<Checkbox className="task__btn--done" color="primary"></Checkbox>
-					<Button className="task__btn--del" children="" variant="contained" color="primary">del</Button>
-				</div>
+				<FormControlLabel
+					className="task__controls"
+					label="done"
+					labelPlacement="end"
+					control={<Checkbox color="primary" className="task__btn--done"/>}
+				/>
+				{/*<Button 
+					className="task__btn--del" 
+					children="" 
+					variant="contained" 
+					color="primary"
+					>
+						del
+				</Button>*/}
 			</div>
 		);
 	}
