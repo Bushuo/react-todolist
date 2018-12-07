@@ -13,9 +13,11 @@ class App extends Component {
 
 		this.state = {
 			open: [],
+			done: [],
 		}
 
 		this.addTask = this.addTask.bind(this);
+		this.handleTaskDone = this.handleTaskDone.bind(this);
 	}
 
 	addTask(e) {
@@ -41,6 +43,26 @@ class App extends Component {
 		this._inputElement.value = "";
 	}
 
+	handleTaskDone(key, e) {
+		let handeledTask;
+		if(e.target.checked) {
+			var filteredTasks = this.state.open.filter( (el) =>{
+				if(el.key === key) {
+					handeledTask = el;
+				}
+				return (el.key !== key)
+			});
+			this.setState({
+				open: filteredTasks
+			});
+			this.setState((prevState) => {
+				return {
+					done: prevState.done.concat(handeledTask)
+				}
+			})
+		}
+	}
+
 	render() {
 
 		return (
@@ -64,7 +86,11 @@ class App extends Component {
 						</Button>
 					</div>
 				</form>
-				<TaskList entries={this.state.open}></TaskList>
+				<TaskList 
+					openTasks={this.state.open}
+					doneTasks={this.state.done}
+					taskDone={this.handleTaskDone}
+				/>
 				<Task text="test task"></Task>
 		  	</div>
 	  	);
