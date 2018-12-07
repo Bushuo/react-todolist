@@ -27,6 +27,7 @@ class App extends Component {
 			newTask = {
 				text: this._inputElement.value,
 				key: Date.now(),
+				done: false,
 			}
 
 			// prevState gives back the state just before the function calls
@@ -34,7 +35,7 @@ class App extends Component {
 			// so no data is mutated
 			this.setState((prevState) => {
 					return {
-						open: prevState.open.concat(newTask), 
+						open: [...prevState.open, newTask], 
 					}
 				}
 			);
@@ -45,19 +46,34 @@ class App extends Component {
 
 	handleTaskDone(key, e) {
 		let handeledTask;
-		if(e.target.checked) {
-			var filteredTasks = this.state.open.filter( (el) =>{
+		// could be handeled by an extra function to avoid code duplication
+		if(e.target.checked === true) {
+			console.log("checked");
+			let filteredTasks = this.state.open.filter( (el) =>{
 				if(el.key === key) {
 					handeledTask = el;
 				}
-				return (el.key !== key)
-			});
-			this.setState({
-				open: filteredTasks
+				return (el.key !== key);
 			});
 			this.setState((prevState) => {
 				return {
-					done: prevState.done.concat(handeledTask)
+					open: filteredTasks,
+					done: [...prevState.done, handeledTask]
+				}
+			})
+		}
+		else {
+			console.log("not checked");
+			let filteredTasks = this.state.done.filter(el => {
+				if(el.key === key) {
+					handeledTask = el;
+				}
+				return (el.key !== key);
+			});
+			this.setState((prevState) => {
+				return {
+					done: filteredTasks,
+					open: [...prevState.open, handeledTask]
 				}
 			})
 		}
@@ -94,7 +110,12 @@ class App extends Component {
 				<Task text="test task"></Task>
 		  	</div>
 	  	);
-  	}
+	}
+
+	testData() {
+		return this.state
+	}
+
 }
 
 export default App;

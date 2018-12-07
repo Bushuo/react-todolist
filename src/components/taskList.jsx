@@ -10,7 +10,7 @@ class TaskList extends Component {
 
     createTasks(task) {
         return <Task
-                    onChange={(e) => {this.taskDone(task.key, e)}}
+                    checked={task.done}
                     key={task.key} 
                     text={task.text}>
                 </Task>

@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
 import Radio from '@material-ui/core/Radio';
 
 class Task extends Component {
@@ -8,14 +7,24 @@ class Task extends Component {
 		super(props);
 		this.state = {
 			selectedRadio: 'radio3',
+			checked: false,
 		}
 		this.handleSelectionChange = this.handleSelectionChange.bind(this);
+		this.handleBoxChecked = this.handleBoxChecked.bind(this);
 	}
 
 	handleSelectionChange(changeEvent) {
 		this.setState({
 			selectedRadio: changeEvent.target.value,
 		});
+	}
+
+	handleBoxChecked() {
+		this.setState((prevState) => {
+			return({
+				checked: !prevState.checked
+			});
+		})
 	}
 
 	render() {
@@ -50,7 +59,6 @@ class Task extends Component {
 					control={<Checkbox 
 								color="primary" 
 								className="task__btn--done" 
-								onChange={this.props.onChange}
 							/>}
 				/>
 			</div>
