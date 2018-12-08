@@ -17,7 +17,9 @@ class App extends Component {
 		}
 
 		this.addTask = this.addTask.bind(this);
-		this.handleTaskDone = this.handleTaskDone.bind(this);
+		//this.handleTaskDone = this.handleTaskDone.bind(this);
+		this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
+		this.handleRadioSelection = this.handleRadioSelection.bind(this);
 	}
 
 	addTask(e) {
@@ -27,7 +29,8 @@ class App extends Component {
 			newTask = {
 				text: this._inputElement.value,
 				key: Date.now(),
-				done: false,
+				isDone: false,
+				radioValue: 'radio3',
 			}
 
 			// prevState gives back the state just before the function calls
@@ -44,43 +47,60 @@ class App extends Component {
 		this._inputElement.value = "";
 	}
 
-	handleTaskDone(key, e) {
-		let handeledTask;
-		// could be handeled by an extra function to avoid code duplication
-		if(e.target.checked === true) {
-			console.log("checked");
-			let filteredTasks = this.state.open.filter( (el) =>{
-				if(el.key === key) {
-					handeledTask = el;
+	handleRadioSelection(e, taskkey) {
+
+		// get task from key has to be open TODO enforce
+		let clickedTask = this.state.open.find((cur) => (cur.key === taskkey))
+		let filteredTodos = this.state.open.filter((cur) => (cur.key !== taskkey ))
+
+		clickedTask.radioValue = e.target.value;
+		this.setState(() =>{
+			return {
+				open: [...filteredTodos, clickedTask],
+			}
+		})
+	}
+
+	toggleCheckboxChange(taskkey, isDone) {
+		// find task in array
+		let taskToMove;
+		if(isDone === false) // has to be in open 
+		{
+			let filteredTodos = this.state.open.filter((cur) => {
+				if(cur.key === taskkey) {
+					taskToMove = cur;
 				}
-				return (el.key !== key);
+				return (cur.key !== taskkey)
 			});
+			taskToMove.isDone = !isDone;
 			this.setState((prevState) => {
 				return {
-					open: filteredTasks,
-					done: [...prevState.done, handeledTask]
+					open: filteredTodos,
+					done: [...prevState.done, taskToMove],
+				}
+			})
+
+		} else // has to be in done
+		{
+			let filteredDones = this.state.done.filter((cur) => {
+				if(cur.key === taskkey) {
+					taskToMove = cur;
+				}
+				return (cur.key !== taskkey)
+			});
+			taskToMove.isDone = !isDone;
+			this.setState((prevState) => {
+				return {
+					done: filteredDones,
+					open: [...prevState.open, taskToMove],
 				}
 			})
 		}
-		else {
-			console.log("not checked");
-			let filteredTasks = this.state.done.filter(el => {
-				if(el.key === key) {
-					handeledTask = el;
-				}
-				return (el.key !== key);
-			});
-			this.setState((prevState) => {
-				return {
-					done: filteredTasks,
-					open: [...prevState.open, handeledTask]
-				}
-			})
-		}
+
+		console.log("toggle: " + taskkey);
 	}
 
 	render() {
-
 		return (
 			<div className="App">
 				<NavBar />
@@ -105,11 +125,17 @@ class App extends Component {
 				<TaskList 
 					openTasks={this.state.open}
 					doneTasks={this.state.done}
-					taskDone={this.handleTaskDone}
+					handleCheckbox={this.toggleCheckboxChange}
+					handleRadioSelection={this.handleRadioSelection}
 				/>
-				<Task text="test task"></Task>
+				<h6>styletest</h6>
+				<Task text="test task" key="test" id="test" handleCheckbox={this.testTaskHandler} handleRadioSelection={this.testTaskHandler}></Task>
 		  	</div>
 	  	);
+	}
+
+	testTaskHandler() {
+		console.log("test task reporting");
 	}
 
 	testData() {

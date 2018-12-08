@@ -7,17 +7,17 @@ class TaskList extends Component {
 
         this.createTasks = this.createTasks.bind(this);
     }
-
+    
     createTasks(task) {
         return <Task
-                    checked={task.done}
-                    key={task.key} 
-                    text={task.text}>
-                </Task>
-    }
-
-    taskDone(key, e) {
-        this.props.taskDone(key, e);
+                    isDone={task.isDone}
+                    key={task.key}
+                    id={task.key}
+                    text={task.text}
+                    radioValue={task.radioValue}
+                    handleCheckbox={this.props.handleCheckbox}
+                    handleRadioSelection={this.props.handleRadioSelection}
+                />
     }
 
     render() {
@@ -26,13 +26,24 @@ class TaskList extends Component {
         let listItemsOpen = todoEntries.map(this.createTasks);
         let listItemsDone = todoEntriesDone.map(this.createTasks);
 
-        return (
-            <div>
-                {listItemsOpen}
-                <p>---</p>
-                {listItemsDone}
-            </div>
-        );
+        if(listItemsDone.length > 0) {
+            return (
+                <div>
+                    <h4>Todo</h4>
+                    {listItemsOpen}
+                    <hr></hr>
+                    <h4>Done</h4>
+                    {listItemsDone}
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    <h4>Todo</h4>
+                    {listItemsOpen}
+                </div>
+            );
+        }
     }
 }
 
