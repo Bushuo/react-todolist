@@ -11,18 +11,21 @@ function Task({id, text, isDone, radioValue, handleCheckbox, handleRadioSelectio
 					color="default" value="1"
 					checked={radioValue === "1"} 
 					onChange={(e) => handleRadioSelection(e, id)}
+					disabled={isDone === true}
 				/>
 				<Radio 
 					className="task__radio--M" 
 					color="default" value="2"
 					checked={radioValue === "2"}
 					onChange={(e) => handleRadioSelection(e, id)}
+					disabled={isDone === true}
 				/>
 				<Radio 
 					className="task__radio--S" 
 					color="default" value="3"
 					checked={radioValue === "3"}
 					onChange={(e) => handleRadioSelection(e, id)}
+					disabled={isDone === true}
 				/>
 			</div>
 			

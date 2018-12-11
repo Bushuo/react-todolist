@@ -65,15 +65,17 @@ class App extends Component {
 			]
 		}), () => {
 			// state should not be mutated - work on a copy
-			let sortetTasks = this.state.open;
-			this.insertionSort(sortetTasks);
-			this.setState({open: sortetTasks});
+			// do not sort with size 1
+			if(this.state.open.length > 1) {
+				let sortetTasks = this.state.open;
+				this.insertionSort(sortetTasks);
+				this.setState({open: sortetTasks});
+			}
 		});
 	}
 
 	insertionSort(taskArray) {
-		let progressIndex = 1
-		console.log(taskArray[progressIndex]['radioValue']);
+		let progressIndex = 1;
 		while (progressIndex < taskArray.length) {
 			let innerIndex = progressIndex;
 			while (innerIndex > 0 && 
