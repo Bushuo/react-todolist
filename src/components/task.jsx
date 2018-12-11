@@ -8,20 +8,20 @@ function Task({id, text, isDone, radioValue, handleCheckbox, handleRadioSelectio
 			<div className="task__size">
 				<Radio 
 					className="task__radio--B" 
-					color="default" value="radio1" 
-					checked={radioValue === 'radio1'} 
+					color="default" value="1"
+					checked={radioValue === "1"} 
 					onChange={(e) => handleRadioSelection(e, id)}
 				/>
 				<Radio 
 					className="task__radio--M" 
-					color="default" value="radio2" 
-					checked={radioValue === 'radio2'}
+					color="default" value="2"
+					checked={radioValue === "2"}
 					onChange={(e) => handleRadioSelection(e, id)}
 				/>
 				<Radio 
 					className="task__radio--S" 
-					color="default" value="radio3" 
-					checked={radioValue === 'radio3'}
+					color="default" value="3"
+					checked={radioValue === "3"}
 					onChange={(e) => handleRadioSelection(e, id)}
 				/>
 			</div>

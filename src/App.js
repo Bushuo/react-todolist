@@ -30,7 +30,7 @@ class App extends Component {
 				text: this._inputElement.value,
 				key: Date.now(),
 				isDone: false,
-				radioValue: 'radio3',
+				radioValue: "3",
 			}
 
 			// prevState gives back the state just before the function calls
@@ -48,17 +48,44 @@ class App extends Component {
 	}
 
 	handleRadioSelection(e, taskkey) {
+		const index = this.state.open.findIndex((cur) => cur.key === taskkey);
+		if(index === -1) { 
+			return; // only sort in open
+		}
+		const newValue = e.target.value; // e is a different event inside the arrow function
+		
+		this.setState( ({open})=> ({
+			open: [
+				...open.slice(0, index),
+				{
+					...open[index],
+					 radioValue: newValue,
+				},
+				...open.slice(index + 1)
+			]
+		}), () => {
+			// state should not be mutated - work on a copy
+			let sortetTasks = this.state.open;
+			this.insertionSort(sortetTasks);
+			this.setState({open: sortetTasks});
+		});
+	}
 
-		// get task from key has to be open TODO enforce
-		let clickedTask = this.state.open.find((cur) => (cur.key === taskkey))
-		let filteredTodos = this.state.open.filter((cur) => (cur.key !== taskkey ))
-
-		clickedTask.radioValue = e.target.value;
-		this.setState(() =>{
-			return {
-				open: [...filteredTodos, clickedTask],
+	insertionSort(taskArray) {
+		let progressIndex = 1
+		console.log(taskArray[progressIndex]['radioValue']);
+		while (progressIndex < taskArray.length) {
+			let innerIndex = progressIndex;
+			while (innerIndex > 0 && 
+				Number(taskArray[innerIndex-1]['radioValue']) > Number(taskArray[innerIndex]['radioValue'])) {
+					// swap
+					let buffer = taskArray[innerIndex-1];
+					taskArray[innerIndex-1] = taskArray[innerIndex];
+					taskArray[innerIndex] = buffer;
+					innerIndex--;
 			}
-		})
+			progressIndex++;
+		}
 	}
 
 	toggleCheckboxChange(taskkey, isDone) {
@@ -96,8 +123,6 @@ class App extends Component {
 				}
 			})
 		}
-
-		console.log("toggle: " + taskkey);
 	}
 
 	render() {
