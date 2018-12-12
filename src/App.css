@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+.content__wrapper {
+  width: 70%;
+  margin: auto;
+}
+
 .input__container {
   width: 80%;
   margin-top: 80px;
@@ -10,9 +15,6 @@
 
 .input__text {
   width: 90%;
-  border: none;
-  border-bottom: solid 1px;
-  border-color: black;
   padding-left: 15px;
 }
 

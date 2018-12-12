@@ -1,4 +1,6 @@
 import React, {Component} from "react";
+import Typography from "@material-ui/core/Typography";
+
 import Task from "./task";
 
 class TaskList extends Component {
@@ -14,9 +16,10 @@ class TaskList extends Component {
                     key={task.key}
                     id={task.key}
                     text={task.text}
+                    doneBtnText={task.doneBtnText}
                     radioValue={task.radioValue}
-                    handleCheckbox={this.props.handleCheckbox}
-                    handleRadioSelection={this.props.handleRadioSelection}
+                    handleToggleState={this.props.handleToggleState}
+                    handleUrgenceSelection={this.props.handleUrgenceSelection}
                 />
     }
 
@@ -26,23 +29,29 @@ class TaskList extends Component {
         let listItemsOpen = todoEntries.map(this.createTasks);
         let listItemsDone = todoEntriesDone.map(this.createTasks);
 
-        if(listItemsDone.length > 0) {
-            return (
-                <div>
-                    <h4>Todo</h4>
-                    {listItemsOpen}
-                    <hr></hr>
-                    <h4>Done</h4>
-                    {listItemsDone}
-                </div>
-            )
+        const empty = (<div></div>)
+        const todo = 
+        (<div>                
+            <br/>
+            <Typography variant="h4">Todo</Typography>
+            {listItemsOpen}
+        </div>)
+        const both = 
+        (<div>
+            <br/>
+            <Typography variant="h4">Todo</Typography>
+            {listItemsOpen}
+            <hr></hr>
+            <Typography variant="h4">Done</Typography>
+            {listItemsDone}
+        </div>)
+
+        if(listItemsOpen.length > 0) {
+            return todo
+        } else if(listItemsDone.length > 0){
+            return both
         } else {
-            return (
-                <div>
-                    <h4>Todo</h4>
-                    {listItemsOpen}
-                </div>
-            );
+            return empty
         }
     }
 }

@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-import NavBar from "./components/navbar";
+
 import Button from "@material-ui/core/Button";
+import Input from '@material-ui/core/Input';
+
+import NavBar from "./components/navbar";
 import TaskList from "./components/taskList";
 import Task from "./components/task";
 import "./App.css";
@@ -14,23 +17,27 @@ class App extends Component {
 		this.state = {
 			open: [],
 			done: [],
+			inputText: '',
 		}
 
 		this.addTask = this.addTask.bind(this);
 		//this.handleTaskDone = this.handleTaskDone.bind(this);
-		this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
-		this.handleRadioSelection = this.handleRadioSelection.bind(this);
+		this.handleToggleState = this.handleToggleState.bind(this);
+		this.handleUrgenceSelection = this.handleUrgenceSelection.bind(this);
+		this.handleInputText = this.handleInputText.bind(this);
 	}
 
 	addTask(e) {
 		e.preventDefault();
+		let inputText = this.state.inputText;
 		let newTask;
-		if(this._inputElement.value !== "") {
+		if(inputText !== "") {
 			newTask = {
-				text: this._inputElement.value,
+				text: inputText,
 				key: Date.now(),
 				isDone: false,
 				radioValue: "3",
+				doneBtnText: 'done_outline'
 			}
 
 			// prevState gives back the state just before the function calls
@@ -38,16 +45,15 @@ class App extends Component {
 			// so no data is mutated
 			this.setState((prevState) => {
 					return {
-						open: [...prevState.open, newTask], 
+						open: [...prevState.open, newTask],
+						inputText: '',
 					}
 				}
 			);
 		}
-		
-		this._inputElement.value = "";
 	}
 
-	handleRadioSelection(e, taskkey) {
+	handleUrgenceSelection(e, taskkey) {
 		const index = this.state.open.findIndex((cur) => cur.key === taskkey);
 		if(index === -1) { 
 			return; // only sort in open
@@ -90,7 +96,7 @@ class App extends Component {
 		}
 	}
 
-	toggleCheckboxChange(taskkey, isDone) {
+	handleToggleState(taskkey, isDone) {
 		// find task in array
 		let taskToMove;
 		if(isDone === false) // has to be in open 
@@ -102,6 +108,7 @@ class App extends Component {
 				return (cur.key !== taskkey)
 			});
 			taskToMove.isDone = !isDone;
+			taskToMove.doneBtnText = "undo"
 			this.setState((prevState) => {
 				return {
 					open: filteredTodos,
@@ -118,6 +125,7 @@ class App extends Component {
 				return (cur.key !== taskkey)
 			});
 			taskToMove.isDone = !isDone;
+			taskToMove.doneBtnText = "done_outline"
 			this.setState((prevState) => {
 				return {
 					done: filteredDones,
@@ -127,48 +135,54 @@ class App extends Component {
 		}
 	}
 
+	handleInputText(e) {
+		this.setState({inputText: e.target.value});
+	}
+
 	render() {
 		return (
 			<div className="App">
 				<NavBar />
-				<form className="input__container" onSubmit={this.addTask}>
-					<input 
-						className="input__text" 
-						ref={(a) => this._inputElement = a} 
-						placeholder="new task"
+				<div className="content__wrapper">
+					<form className="input__container" onSubmit={this.addTask}>
+						<Input
+							className="input__text"
+							value={this.state.inputText}
+							placeholder="new task"
+							onChange={(e) => this.handleInputText(e)}
+						/>
+						<div className="input__btn__cont">
+							<Button
+								className="input__btn--add" 
+								type="submit"
+								children="" 
+								variant="contained" 
+								color="primary"
+							>
+								add
+							</Button>
+						</div>
+					</form>
+					<TaskList 
+						openTasks={this.state.open}
+						doneTasks={this.state.done}
+						handleToggleState={this.handleToggleState}
+						handleUrgenceSelection={this.handleUrgenceSelection}
 					/>
-					<div className="input__btn__cont">
-						<Button
-							className="input__btn--add" 
-							type="submit"
-							children="" 
-							variant="contained" 
-							color="primary"
-						>
-							add
-						</Button>
-					</div>
-				</form>
-				<TaskList 
-					openTasks={this.state.open}
-					doneTasks={this.state.done}
-					handleCheckbox={this.toggleCheckboxChange}
-					handleRadioSelection={this.handleRadioSelection}
-				/>
-				<h6>styletest</h6>
-				<Task text="test task" key="test" id="test" handleCheckbox={this.testTaskHandler} handleRadioSelection={this.testTaskHandler}></Task>
-		  	</div>
+					{/* uncomment to test styles
+					
+					<h6>styletest</h6>
+					<Task text="test task" doneBtnText="done_outline" key="test" id="test" handleToggleState={this.testTaskHandler} handleUrgenceSelection={this.testTaskHandler}></Task>
+
+					*/}
+				</div>
+			</div>
 	  	);
 	}
 
 	testTaskHandler() {
 		console.log("test task reporting");
 	}
-
-	testData() {
-		return this.state
-	}
-
 }
 
 export default App;

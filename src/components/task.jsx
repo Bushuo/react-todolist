@@ -1,8 +1,8 @@
 import React from "react";
-import { Checkbox} from "@material-ui/core";
+import { IconButton, Icon } from "@material-ui/core";
 import Radio from '@material-ui/core/Radio';
 
-function Task({id, text, isDone, radioValue, handleCheckbox, handleRadioSelection}) {
+function Task({id, text, doneBtnText, isDone, radioValue, handleToggleState, handleUrgenceSelection}) {
 	return (
 		<div className="task__container">
 			<div className="task__size">
@@ -10,32 +10,32 @@ function Task({id, text, isDone, radioValue, handleCheckbox, handleRadioSelectio
 					className="task__radio--B" 
 					color="default" value="1"
 					checked={radioValue === "1"} 
-					onChange={(e) => handleRadioSelection(e, id)}
+					onChange={(e) => handleUrgenceSelection(e, id)}
 					disabled={isDone === true}
 				/>
 				<Radio 
 					className="task__radio--M" 
 					color="default" value="2"
 					checked={radioValue === "2"}
-					onChange={(e) => handleRadioSelection(e, id)}
+					onChange={(e) => handleUrgenceSelection(e, id)}
 					disabled={isDone === true}
 				/>
 				<Radio 
 					className="task__radio--S" 
 					color="default" value="3"
 					checked={radioValue === "3"}
-					onChange={(e) => handleRadioSelection(e, id)}
+					onChange={(e) => handleUrgenceSelection(e, id)}
 					disabled={isDone === true}
 				/>
 			</div>
 			
 			<div className="task__description">{text}</div>
-			<Checkbox 
-				type="checkbox"
+			<IconButton
 				color="primary"
-				onClick={()=>handleCheckbox(id, isDone)}
-				checked={isDone === true}
-			/>
+				onClick={()=>handleToggleState(id, isDone)}
+			>
+				<Icon>{doneBtnText}</Icon>
+			</IconButton>
 		</div>
 	);
 };
