@@ -46,7 +46,7 @@ class TaskList extends Component {
             {listItemsDone}
         </div>)
 
-        if(listItemsOpen.length > 0) {
+        if(listItemsOpen.length > 0 && listItemsDone.length === 0) {
             return todo
         } else if(listItemsDone.length > 0){
             return both
