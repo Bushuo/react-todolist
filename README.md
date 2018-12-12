@@ -1,4 +1,5 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Run<br> <code>npm install @material-ui/core</code><br> to get the dependecies
 
 ## Available Scripts
 
