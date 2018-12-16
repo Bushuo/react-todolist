@@ -1,5 +1,7 @@
 import React, {Component} from "react";
 import Typography from "@material-ui/core/Typography";
+import Grow from '@material-ui/core/Grow'
+import { Switch } from "@material-ui/core";
 
 import Task from "./task";
 
@@ -11,16 +13,18 @@ class TaskList extends Component {
     }
     
     createTasks(task) {
-        return <Task
-                    isDone={task.isDone}
-                    key={task.key}
-                    id={task.key}
-                    text={task.text}
-                    doneBtnText={task.doneBtnText}
-                    radioValue={task.radioValue}
-                    handleToggleState={this.props.handleToggleState}
-                    handleUrgenceSelection={this.props.handleUrgenceSelection}
-                />
+        return (<Grow in={this.props.showDone || !task.isDone}>
+                    <Task
+                        isDone={task.isDone}
+                        key={task.key}
+                        id={task.key}
+                        text={task.text}
+                        doneBtnText={task.doneBtnText}
+                        radioValue={task.radioValue}
+                        handleToggleState={this.props.handleToggleState}
+                        handleUrgenceSelection={this.props.handleUrgenceSelection}
+                    />
+                </Grow>);
     }
 
     render() {
@@ -42,6 +46,7 @@ class TaskList extends Component {
             <Typography variant="h4">Todo</Typography>
             {listItemsOpen}
             <hr></hr>
+            <Switch color="primary" checked={this.props.showDone} onChange={this.props.handleToggleShowDone}/>
             <Typography variant="h4">Done</Typography>
             {listItemsDone}
         </div>)

@@ -2,9 +2,9 @@ import React from "react";
 import { IconButton, Icon } from "@material-ui/core";
 import Radio from '@material-ui/core/Radio';
 
-function Task({id, text, doneBtnText, isDone, radioValue, handleToggleState, handleUrgenceSelection}) {
+function Task({id, text, doneBtnText, isDone, radioValue, handleToggleState, handleUrgenceSelection, style}) {
 	return (
-		<div className="task__container">
+		<div className="task__container" style={style}>
 			<div className="task__size">
 				<Radio 
 					className="task__radio--B" 

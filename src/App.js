@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import Button from "@material-ui/core/Button";
 import Input from '@material-ui/core/Input';
+import Grow from '@material-ui/core/Grow'
+
 
 import NavBar from "./components/navbar";
 import TaskList from "./components/taskList";
@@ -18,6 +20,7 @@ class App extends Component {
 			open: [],
 			done: [],
 			inputText: '',
+			showDone: false,
 		}
 
 		this.addTask = this.addTask.bind(this);
@@ -139,9 +142,13 @@ class App extends Component {
 		this.setState({inputText: e.target.value});
 	}
 
+	handleToggleShowDone= () => {
+		this.setState(prevState => ({showDone: !prevState.showDone}))
+	}
+
 	render() {
 		return (
-			<div className="App">
+			<div className="App" >
 				<NavBar />
 				<div className="content__wrapper">
 					<form className="input__container" onSubmit={this.addTask}>
@@ -168,6 +175,9 @@ class App extends Component {
 						doneTasks={this.state.done}
 						handleToggleState={this.handleToggleState}
 						handleUrgenceSelection={this.handleUrgenceSelection}
+						handleToggleShowDone={this.handleToggleShowDone}
+						showDone={this.state.showDone}
+
 					/>
 					{/* uncomment to test styles
 					
