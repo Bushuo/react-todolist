@@ -2,15 +2,10 @@ import React, { Component } from "react";
 
 import Button from "@material-ui/core/Button";
 import Input from '@material-ui/core/Input';
-import Grow from '@material-ui/core/Grow'
-
+import { withStyles } from '@material-ui/core/styles'
 
 import NavBar from "./components/navbar";
 import TaskList from "./components/taskList";
-import Task from "./components/task";
-import "./App.css";
-
-
 
 class App extends Component {
 	constructor(props) {
@@ -24,7 +19,6 @@ class App extends Component {
 		}
 
 		this.addTask = this.addTask.bind(this);
-		//this.handleTaskDone = this.handleTaskDone.bind(this);
 		this.handleToggleState = this.handleToggleState.bind(this);
 		this.handleUrgenceSelection = this.handleUrgenceSelection.bind(this);
 		this.handleInputText = this.handleInputText.bind(this);
@@ -147,20 +141,20 @@ class App extends Component {
 	}
 
 	render() {
+		const { classes } = this.props;
 		return (
-			<div className="App" >
+			<div className={classes.root} >
 				<NavBar />
-				<div className="content__wrapper">
-					<form className="input__container" onSubmit={this.addTask}>
+				<div className={classes.wrapper}>
+					<form className={classes.inputContainer} onSubmit={this.addTask}>
 						<Input
-							className="input__text"
+							className={classes.inputText}
 							value={this.state.inputText}
 							placeholder="new task"
 							onChange={(e) => this.handleInputText(e)}
 						/>
-						<div className="input__btn__cont">
+						<div className={classes.inputButtonContainer}>
 							<Button
-								className="input__btn--add" 
 								type="submit"
 								children="" 
 								variant="contained" 
@@ -179,12 +173,6 @@ class App extends Component {
 						showDone={this.state.showDone}
 
 					/>
-					{/* uncomment to test styles
-					
-					<h6>styletest</h6>
-					<Task text="test task" doneBtnText="done_outline" key="test" id="test" handleToggleState={this.testTaskHandler} handleUrgenceSelection={this.testTaskHandler}></Task>
-
-					*/}
 				</div>
 			</div>
 	  	);
@@ -195,4 +183,28 @@ class App extends Component {
 	}
 }
 
-export default App;
+const styles = {
+	root: {
+		textAlign: 'center'
+	},
+	wrapper: {
+		width: '70%',
+		margin: 'auto'
+	},
+	inputContainer: {
+		width: '80%',
+		marginTop: '80px',
+		marginLeft: '10%'
+	},
+	inputText: {
+		width: '90%',
+		paddingLeft: '15px',
+	},
+	inputButtonContainer: {
+		marginLeft: '5%',
+		width: '5%',
+		display: 'inline-block'
+	}
+}
+
+export default withStyles(styles)(App);

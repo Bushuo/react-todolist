@@ -1,27 +1,27 @@
 import React from "react";
 import { IconButton, Icon } from "@material-ui/core";
 import Radio from '@material-ui/core/Radio';
+import { withStyles } from '@material-ui/core/styles'
 
-function Task({id, text, doneBtnText, isDone, radioValue, handleToggleState, handleUrgenceSelection, style}) {
+
+function Task(props) {
+	const {classes, id, text, doneBtnText, isDone, radioValue, handleToggleState, handleUrgenceSelection} = props;
 	return (
-		<div className="task__container" style={style}>
-			<div className="task__size">
+		<div className={classes.container} >
+			<div className={classes.size}>
 				<Radio 
-					className="task__radio--B" 
 					color="default" value="1"
 					checked={radioValue === "1"} 
 					onChange={(e) => handleUrgenceSelection(e, id)}
 					disabled={isDone === true}
 				/>
 				<Radio 
-					className="task__radio--M" 
 					color="default" value="2"
 					checked={radioValue === "2"}
 					onChange={(e) => handleUrgenceSelection(e, id)}
 					disabled={isDone === true}
 				/>
 				<Radio 
-					className="task__radio--S" 
 					color="default" value="3"
 					checked={radioValue === "3"}
 					onChange={(e) => handleUrgenceSelection(e, id)}
@@ -29,7 +29,7 @@ function Task({id, text, doneBtnText, isDone, radioValue, handleToggleState, han
 				/>
 			</div>
 			
-			<div className="task__description">{text}</div>
+			<div className={classes.description}>{text}</div>
 			<IconButton
 				color="primary"
 				onClick={()=>handleToggleState(id, isDone)}
@@ -40,4 +40,27 @@ function Task({id, text, doneBtnText, isDone, radioValue, handleToggleState, han
 	);
 };
 
-export default Task;
+const styles = {
+	container: {
+		border: 'solid 1px lightgrey',
+		width: '80%',
+		marginLeft: '10%',
+		marginTop: '10px',
+		borderRadius: '10px',
+		backgroundColor: 'rgba(230, 230, 250, 0.5)',
+		fontSize: '20px',
+		color: 'gray'
+	},
+	size: {
+		display: 'inline-block'
+	},
+	description: {
+		//width: '80%',
+		display: 'inline-block',
+		paddingLeft: '50px',
+		textAlign: 'start'
+	}
+
+};
+
+export default withStyles(styles)(Task);

@@ -13,10 +13,9 @@ class TaskList extends Component {
     }
     
     createTasks(task) {
-        return (<Grow in={this.props.showDone || !task.isDone}>
+        return (<Grow key={task.key} in={this.props.showDone || !task.isDone}>
                     <Task
                         isDone={task.isDone}
-                        key={task.key}
                         id={task.key}
                         text={task.text}
                         doneBtnText={task.doneBtnText}
