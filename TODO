@@ -11,8 +11,10 @@ save the state of the app to local storage:
 
 ☐ delete button
     ✔ style the button nice @done(18-12-22 18:37)
-    ☐ delete tasks from state
+    ✔ delete tasks from state @done(18-12-22 23:09)
     ☐ delete tasks from storage
+
+☐ only save tasks to storage on unmount, forceclose, etc
 
 ☐ grow animation on sort
 

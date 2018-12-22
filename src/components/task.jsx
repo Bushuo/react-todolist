@@ -13,7 +13,8 @@ function Task(props) {
         isDone,
         radioValue,
         handleToggleState,
-        handleUrgenceSelection
+        handleUrgenceSelection,
+        deleteTask
     } = props;
     return (
         <div
@@ -24,7 +25,7 @@ function Task(props) {
                 <IconButton
                     className={classes.button}
                     color="secondary"
-                    onClick={() => console.log("was clicked")}
+                    onClick={e => deleteTask(e, id, isDone)}
                 >
                     <Icon>{delBtnText}</Icon>
                 </IconButton>

@@ -24,6 +24,7 @@ class TaskList extends Component {
                     radioValue={task.radioValue}
                     handleToggleState={this.props.handleToggleState}
                     handleUrgenceSelection={this.props.handleUrgenceSelection}
+                    deleteTask={this.props.deleteTask}
                 />
             </Grow>
         );
@@ -53,12 +54,12 @@ class TaskList extends Component {
                 <br />
                 <Typography variant="h4">Todo</Typography>
                 {listItemsOpen}
-                <hr />
                 <Switch
                     color="primary"
                     checked={this.props.showDone}
                     onChange={this.props.handleToggleShowDone}
                 />
+                <hr />
                 <Typography variant="h4">Done</Typography>
                 {listItemsDone}
             </div>

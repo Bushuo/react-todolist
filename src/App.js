@@ -22,6 +22,7 @@ class App extends Component {
         this.handleToggleState = this.handleToggleState.bind(this);
         this.handleUrgenceSelection = this.handleUrgenceSelection.bind(this);
         this.handleInputText = this.handleInputText.bind(this);
+        this.deleteTask = this.deleteTask.bind(this);
     }
 
     hydrateStateWithLocalStorage() {
@@ -85,6 +86,30 @@ class App extends Component {
                 }
             );
         }
+    }
+
+    deleteTask(e, taskkey, isDone) {
+        let index;
+        let tasksToModify;
+        if(!isDone) {
+            index = this.state.open.findIndex(cur => cur.key === taskkey);
+            tasksToModify = this.state.open;
+        }
+        else {
+            index = this.state.done.findIndex(cur => cur.key === taskkey);
+            tasksToModify = this.state.done;
+        }
+        if(index === -1) { // should never happen
+            return;
+        }
+        tasksToModify = [...tasksToModify.slice(0, index-1), ...tasksToModify.slice(index + 1)];
+        if(isDone) {
+            this.setState({done: tasksToModify})
+        }
+        else {
+            this.setState({open : tasksToModify})
+        }
+
     }
 
     handleUrgenceSelection(e, taskkey) {
@@ -242,6 +267,7 @@ class App extends Component {
                         openTasks={this.state.open}
                         doneTasks={this.state.done}
                         handleToggleState={this.handleToggleState}
+                        deleteTask={this.deleteTask}
                         handleUrgenceSelection={this.handleUrgenceSelection}
                         handleToggleShowDone={this.handleToggleShowDone}
                         showDone={this.state.showDone}
