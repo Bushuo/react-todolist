@@ -84,7 +84,8 @@ class App extends Component {
                 }
             );
         }
-    }
+	}
+	
     handleUrgenceSelection(e, taskkey) {
         const index = this.state.open.findIndex(cur => cur.key === taskkey);
         if (index === -1) {
@@ -205,7 +206,11 @@ class App extends Component {
 
     handleToggleShowDone = () => {
         this.setState(prevState => ({ showDone: !prevState.showDone }));
-    };
+	};
+	
+	handleUrgenceAreaClicked = () => {
+		
+	}
 
     render() {
         const { classes } = this.props;
@@ -246,10 +251,6 @@ class App extends Component {
             </div>
         );
     }
-
-    testTaskHandler() {
-        console.log("test task reporting");
-    }
 }
 
 const styles = {
@@ -261,18 +262,17 @@ const styles = {
         margin: "auto"
     },
     inputContainer: {
-        width: "80%",
         marginTop: "80px",
-        marginLeft: "10%"
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center"
     },
     inputText: {
-        width: "90%",
+        width: "100%",
         paddingLeft: "15px"
     },
     inputButtonContainer: {
-        marginLeft: "5%",
-        width: "5%",
-        display: "inline-block"
+        marginTop: "10px"
     }
 };
 

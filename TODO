@@ -1,6 +1,6 @@
 ☐ radio buttons
     ☐ add tooltips for radio buttons
-    ☐ make radiobuttons on a new line
+    ✔ make radiobuttons on a new line @done(18-12-22 17:40)
 
 save the state of the app to local storage:
     ✔ save open tasks on add @done(18-12-22 01:04)

@@ -15,7 +15,10 @@ function Task(props) {
         handleUrgenceSelection
     } = props;
     return (
-        <div>
+        <div
+            className={classes.root}
+            onClick={() => console.log("task root clicked")}
+        >
             <div className={classes.container}>
                 <div className={classes.description}>{text}</div>
                 <IconButton
@@ -55,15 +58,20 @@ function Task(props) {
 }
 
 const styles = {
-    container: {
-        border: "solid 1px lightgrey",
+    root: {
         marginTop: "10px",
+        marginBottom: "10px",
+        borderRadius: "10px",
+        border: "solid 1px lightgrey"
+    },
+    container: {
+        display: "flex",
+        justifyContent: "space-between",
+        paddingLeft: "20px",
         borderRadius: "10px",
         backgroundColor: "rgba(230, 230, 250, 0.5)",
         fontSize: "20px",
-        color: "gray",
-        display: "flex",
-        justifyContent: "space-between"
+        color: "gray"
     },
     radioContainer: {},
     description: {
