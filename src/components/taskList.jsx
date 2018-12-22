@@ -20,6 +20,7 @@ class TaskList extends Component {
                     id={task.key}
                     text={task.text}
                     doneBtnText={task.doneBtnText}
+                    delBtnText={task.delBtnText}
                     radioValue={task.radioValue}
                     handleToggleState={this.props.handleToggleState}
                     handleUrgenceSelection={this.props.handleUrgenceSelection}

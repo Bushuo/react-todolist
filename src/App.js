@@ -61,7 +61,8 @@ class App extends Component {
                 key: Date.now(),
                 isDone: false,
                 radioValue: "3",
-                doneBtnText: "done_outline"
+                doneBtnText: "done",
+                delBtnText: "clear"
             };
 
             // prevState gives back the state just before the function calls
@@ -84,8 +85,8 @@ class App extends Component {
                 }
             );
         }
-	}
-	
+    }
+
     handleUrgenceSelection(e, taskkey) {
         const index = this.state.open.findIndex(cur => cur.key === taskkey);
         if (index === -1) {
@@ -175,7 +176,7 @@ class App extends Component {
                 return cur.key !== taskkey;
             });
             taskToMove.isDone = !isDone;
-            taskToMove.doneBtnText = "done_outline";
+            taskToMove.doneBtnText = "done";
             this.setState(
                 prevState => {
                     return {
@@ -206,11 +207,9 @@ class App extends Component {
 
     handleToggleShowDone = () => {
         this.setState(prevState => ({ showDone: !prevState.showDone }));
-	};
-	
-	handleUrgenceAreaClicked = () => {
-		
-	}
+    };
+
+    handleUrgenceAreaClicked = () => {};
 
     render() {
         const { classes } = this.props;

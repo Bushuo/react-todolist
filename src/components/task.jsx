@@ -9,6 +9,7 @@ function Task(props) {
         id,
         text,
         doneBtnText,
+        delBtnText,
         isDone,
         radioValue,
         handleToggleState,
@@ -20,6 +21,13 @@ function Task(props) {
             onClick={() => console.log("task root clicked")}
         >
             <div className={classes.container}>
+                <IconButton
+                    className={classes.button}
+                    color="secondary"
+                    onClick={() => console.log("was clicked")}
+                >
+                    <Icon>{delBtnText}</Icon>
+                </IconButton>
                 <div className={classes.description}>{text}</div>
                 <IconButton
                     className={classes.button}
@@ -32,14 +40,14 @@ function Task(props) {
 
             <div className={classes.radioContainer}>
                 <Radio
-                    color="default"
+                    color="primary"
                     value="1"
                     checked={radioValue === "1"}
                     onChange={e => handleUrgenceSelection(e, id)}
                     disabled={isDone === true}
                 />
                 <Radio
-                    color="default"
+                    color="secondary"
                     value="2"
                     checked={radioValue === "2"}
                     onChange={e => handleUrgenceSelection(e, id)}

@@ -10,7 +10,7 @@ save the state of the app to local storage:
     ✔ hydrate app with state on root mount @done(18-12-22 01:18)
 
 ☐ delete button
-    ☐ style the button nice
+    ✔ style the button nice @done(18-12-22 18:37)
     ☐ delete tasks from state
     ☐ delete tasks from storage
 
