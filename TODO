@@ -1,0 +1,10 @@
+☐ add tooltips for radio buttons
+save the state of the app to local storage:
+    ✔ save open tasks on add @done(18-12-22 01:04)
+    ✔ save tasks on state toggle @done(18-12-22 01:18)
+    ☐ save tasks on sort
+    ☐ save tasks on urgenceHandle
+    ✔ hydrate app with state on root mount @done(18-12-22 01:18)
+
+☐ delete tasks from state
+☐ delete tasks from storage

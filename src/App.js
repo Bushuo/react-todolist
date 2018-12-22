@@ -24,6 +24,30 @@ class App extends Component {
 		this.handleInputText = this.handleInputText.bind(this);
 	}
 
+	hydrateStateWithLocalStorage() {
+		// for all items in state
+		for (let key in this.state) {
+			// if the key exists in localStorage
+			if (localStorage.hasOwnProperty(key)) {
+				// get the key's value from localStorage
+				let value = localStorage.getItem(key);
+
+				// parse the localStorage string and setState
+				try {
+					value = JSON.parse(value);
+					this.setState({ [key]: value });
+				} catch (e) {
+					// handle empty string
+					this.setState({ [key]: value });
+				}
+			}
+		}
+	}
+	
+	componentDidMount() {
+		this.hydrateStateWithLocalStorage();
+	}
+
 	addTask(e) {
 		e.preventDefault();
 		let inputText = this.state.inputText;
@@ -45,11 +69,14 @@ class App extends Component {
 						open: [...prevState.open, newTask],
 						inputText: '',
 					}
+				}, () => {
+					// save open to local storage
+					localStorage.setItem("open", JSON.stringify(this.state.open));
+					localStorage.setItem("inputText", "");
 				}
 			);
 		}
 	}
-
 	handleUrgenceSelection(e, taskkey) {
 		const index = this.state.open.findIndex((cur) => cur.key === taskkey);
 		if(index === -1) { 
@@ -111,7 +138,10 @@ class App extends Component {
 					open: filteredTodos,
 					done: [...prevState.done, taskToMove],
 				}
-			})
+			}, () => {
+				localStorage.setItem("open", JSON.stringify(this.state.open));
+				localStorage.setItem("done", JSON.stringify(this.state.done));
+			});
 
 		} else // has to be in done
 		{
@@ -128,12 +158,18 @@ class App extends Component {
 					done: filteredDones,
 					open: [...prevState.open, taskToMove],
 				}
-			})
+			},() => {
+				localStorage.setItem("open", JSON.stringify(this.state.open));
+				localStorage.setItem("done", JSON.stringify(this.state.done));
+			});
 		}
 	}
 
 	handleInputText(e) {
-		this.setState({inputText: e.target.value});
+		const value = e.target.value;
+		this.setState({inputText: value});
+		// update local storage
+		localStorage.setItem("inputText", value);
 	}
 
 	handleToggleShowDone= () => {
@@ -194,7 +230,7 @@ const styles = {
 	inputContainer: {
 		width: '80%',
 		marginTop: '80px',
-		marginLeft: '10%'
+		marginLeft: '10%',
 	},
 	inputText: {
 		width: '90%',

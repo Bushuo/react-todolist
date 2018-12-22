@@ -49,7 +49,8 @@ const styles = {
 		borderRadius: '10px',
 		backgroundColor: 'rgba(230, 230, 250, 0.5)',
 		fontSize: '20px',
-		color: 'gray'
+		color: 'gray',
+		display: 'felx'
 	},
 	size: {
 		display: 'inline-block'
@@ -58,7 +59,8 @@ const styles = {
 		//width: '80%',
 		display: 'inline-block',
 		paddingLeft: '50px',
-		textAlign: 'start'
+		textAlign: 'start',
+		width: 'inherit'
 	}
 
 };
