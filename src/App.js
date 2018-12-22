@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
+import Modal from '@material-ui/core/Modal';
+import Typography from '@material-ui/core/Typography';
 import { withStyles } from "@material-ui/core/styles";
 
 import NavBar from "./components/navbar";
@@ -15,7 +17,8 @@ class App extends Component {
             open: [],
             done: [],
             inputText: "",
-            showDone: false
+            showDone: false,
+            shouldReset: false,
         };
 
         this.addTask = this.addTask.bind(this);
@@ -23,6 +26,18 @@ class App extends Component {
         this.handleUrgenceSelection = this.handleUrgenceSelection.bind(this);
         this.handleInputText = this.handleInputText.bind(this);
         this.deleteTask = this.deleteTask.bind(this);
+    }
+
+    resetApplication() {
+
+    }
+
+    openResetAppModal = () => {
+        this.setState({shouldReset:true}, () => console.log(this.state.shouldReset));
+    }
+
+    abortResetApp = () => {
+        this.setState({shouldReset:false});
     }
 
     hydrateStateWithLocalStorage() {
@@ -54,8 +69,8 @@ class App extends Component {
           // save to localStorage
           localStorage.setItem(key, JSON.stringify(this.state[key]));
         }
-      }
-
+    }
+    
     componentDidMount() {
         this.hydrateStateWithLocalStorage();
 
@@ -231,6 +246,14 @@ class App extends Component {
 
     handleUrgenceAreaClicked = () => {};
 
+    getModalStyle() {
+        return {
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+        }
+    }
+
     render() {
         const { classes } = this.props;
         return (
@@ -268,12 +291,34 @@ class App extends Component {
                         showDone={this.state.showDone}
                     />
                 </div>
+                <Button
+                    className={classes.resetAppBtn}
+                    children=""
+                    variant="outlined"
+                    color="secondary"
+                    onClick={this.openResetAppModal}
+                >
+                reset app
+                </Button>
+                <Modal style={this.getModalStyle()}
+                    open={this.state.shouldReset}
+                    onClose={this.abortResetApp}
+                >   
+                    <div className={classes.resetModal}>
+                        <Typography variant="h6">
+                            Reset Application?
+                        </Typography>
+                        <Typography variant="subtitle1" >
+                            Do you want to really reset the application? There is no going back
+                        </Typography>
+                        </div>
+                </Modal>
             </div>
         );
     }
 }
 
-const styles = {
+const styles = theme => ({
     root: {
         textAlign: "center"
     },
@@ -293,7 +338,17 @@ const styles = {
     },
     inputButtonContainer: {
         marginTop: "10px"
+    },
+    resetAppBtn: {
+        marginTop: "20px"
+    },
+    resetModal: {
+        position: 'absolute',
+        width: theme.spacing.unit * 50,
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing.unit * 4,
     }
-};
+});
 
 export default withStyles(styles)(App);
