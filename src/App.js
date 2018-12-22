@@ -28,7 +28,7 @@ class App extends Component {
     hydrateStateWithLocalStorage() {
         // for all items in state
         for (let key in this.state) {
-            if (key === "showDone" || key === "inputText") {
+            if (key === "inputText") {
                 continue;
             }
             // if the key exists in localStorage
@@ -48,8 +48,33 @@ class App extends Component {
         }
     }
 
+    saveStateToLocalStorage() {
+        // for every item in React state
+        for (let key in this.state) {
+          // save to localStorage
+          localStorage.setItem(key, JSON.stringify(this.state[key]));
+        }
+      }
+
     componentDidMount() {
         this.hydrateStateWithLocalStorage();
+
+        // add event listener to save state to localStorage
+        // when user leaves/refreshes the page
+        window.addEventListener(
+            "beforeunload",
+            this.saveStateToLocalStorage.bind(this)
+        );
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener(
+          "beforeunload",
+          this.saveStateToLocalStorage.bind(this)
+        );
+    
+        // saves if component has a chance to unmount
+        this.saveStateToLocalStorage();
     }
 
     addTask(e) {
@@ -75,14 +100,6 @@ class App extends Component {
                         open: [...prevState.open, newTask],
                         inputText: ""
                     };
-                },
-                () => {
-                    // save open to local storage
-                    localStorage.setItem(
-                        "open",
-                        JSON.stringify(this.state.open)
-                    );
-                    localStorage.setItem("inputText", "");
                 }
             );
         }
@@ -102,7 +119,7 @@ class App extends Component {
         if(index === -1) { // should never happen
             return;
         }
-        tasksToModify = [...tasksToModify.slice(0, index-1), ...tasksToModify.slice(index + 1)];
+        tasksToModify = [...tasksToModify.slice(0, index), ...tasksToModify.slice(index+1)];
         if(isDone) {
             this.setState({done: tasksToModify})
         }
@@ -180,16 +197,6 @@ class App extends Component {
                         open: filteredTodos,
                         done: [...prevState.done, taskToMove]
                     };
-                },
-                () => {
-                    localStorage.setItem(
-                        "open",
-                        JSON.stringify(this.state.open)
-                    );
-                    localStorage.setItem(
-                        "done",
-                        JSON.stringify(this.state.done)
-                    );
                 }
             );
         } // has to be in done
@@ -208,16 +215,6 @@ class App extends Component {
                         done: filteredDones,
                         open: [...prevState.open, taskToMove]
                     };
-                },
-                () => {
-                    localStorage.setItem(
-                        "open",
-                        JSON.stringify(this.state.open)
-                    );
-                    localStorage.setItem(
-                        "done",
-                        JSON.stringify(this.state.done)
-                    );
                 }
             );
         }
@@ -226,8 +223,6 @@ class App extends Component {
     handleInputText(e) {
         const value = e.target.value;
         this.setState({ inputText: value });
-        // update local storage
-        localStorage.setItem("inputText", value);
     }
 
     handleToggleShowDone = () => {

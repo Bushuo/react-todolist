@@ -1,22 +1,25 @@
-☐ radio buttons
-    ☐ add tooltips for radio buttons
+✔ radio buttons @done(18-12-22 23:28)
     ✔ make radiobuttons on a new line @done(18-12-22 17:40)
 
-save the state of the app to local storage:
+✔ save the state of the app to local storage: @done(18-12-22 23:28)
     ✔ save open tasks on add @done(18-12-22 01:04)
     ✔ save tasks on state toggle @done(18-12-22 01:18)
-    ☐ save tasks on sort
-    ☐ save tasks on urgenceHandle
+    ✔ save tasks on sort @done(18-12-22 23:18)
+    ✔ save tasks on urgenceHandle @done(18-12-22 23:18)
     ✔ hydrate app with state on root mount @done(18-12-22 01:18)
 
-☐ delete button
+✔ delete button @done(18-12-22 23:18)
     ✔ style the button nice @done(18-12-22 18:37)
     ✔ delete tasks from state @done(18-12-22 23:09)
-    ☐ delete tasks from storage
+    ✔ delete tasks from storage @done(18-12-22 23:18)
 
-☐ only save tasks to storage on unmount, forceclose, etc
+✔ only save tasks to storage on unmount, forceclose, etc @done(18-12-22 23:18)
 
 ☐ grow animation on sort
 
 ☐ drag and drop to sort tasks inside their urgence level @low
     ☐ with grow animation
+
+☐ reset application button 
+    ☐ styling
+    ☐ (delete all tasks and delete local storage)
