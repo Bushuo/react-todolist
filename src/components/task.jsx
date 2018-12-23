@@ -19,14 +19,14 @@ function Task(props) {
         deleteTask,
         handleTaskDragStart,
         handleTaskDragOver,
-        handleTaskDragEnd
+        handleTaskDrop
     } = props;
     return (
         <div
             className={classes.root}
             draggable
             onDragStart={e => handleTaskDragStart(e, id)}
-            onDragEnd={e => handleTaskDragEnd(e)}
+            onDrop={e => handleTaskDrop(e, id)}
             onDragOver={e => handleTaskDragOver(e)}
         >
             <div className={classes.container}>

@@ -21,7 +21,8 @@ class App extends Component {
             done: [],
             inputText: "",
             showDone: false,
-            shouldReset: false
+            shouldReset: false,
+            draggedTask: ""
         };
 
         this.addTask = this.addTask.bind(this);
@@ -269,9 +270,12 @@ class App extends Component {
         }));
     };
 
-    handleTaskDragStart = () => {
+    handleTaskDragStart = (e, taskkey) => {
         console.log("start task drag");
-        // save taskkey to dataTransfer
+        // just set to state
+        this.setState({
+            draggedTask: taskkey
+        });
     };
 
     handleTaskDragOver = e => {
@@ -279,10 +283,16 @@ class App extends Component {
         e.preventDefault();
     };
 
-    handleTaskDragEnd = () => {
+    handleTaskDrop = (e, taskkey) => {
         console.log("end task drag");
         // get taskkey from datatransfer
+        let keyDraggedTask = this.state.draggedTask;
+        console.log(key);
+        console.log(taskkey);
         // compare it to the index inside the openTasks
+        const indexDraggedTask = this.state.open.findIndex(
+            cur => cur.key === keyDraggedTask
+        );
         // drop it before the index
         // sort
     };
@@ -325,7 +335,7 @@ class App extends Component {
                         showDone={this.state.showDone}
                         handleTaskDragStart={this.handleTaskDragStart}
                         handleTaskDragOver={this.handleTaskDragOver}
-                        handleTaskDragEnd={this.handleTaskDragEnd}
+                        handleTaskDrop={this.handleTaskDrop}
                     />
                 </div>
                 <Button
