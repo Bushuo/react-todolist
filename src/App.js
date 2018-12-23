@@ -2,8 +2,11 @@ import React, { Component } from "react";
 
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
-import Modal from '@material-ui/core/Modal';
-import Typography from '@material-ui/core/Typography';
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import { withStyles } from "@material-ui/core/styles";
 
 import NavBar from "./components/navbar";
@@ -18,7 +21,7 @@ class App extends Component {
             done: [],
             inputText: "",
             showDone: false,
-            shouldReset: false,
+            shouldReset: false
         };
 
         this.addTask = this.addTask.bind(this);
@@ -28,17 +31,25 @@ class App extends Component {
         this.deleteTask = this.deleteTask.bind(this);
     }
 
-    resetApplication() {
-
-    }
+    resetApplication = () => {
+        console.log("reset the app clicked");
+        localStorage.clear();
+        this.setState({
+            open: [],
+            done: [],
+            inputText: "",
+            showDone: false,
+            shouldReset: false
+        });
+    };
 
     openResetAppModal = () => {
-        this.setState({shouldReset:true}, () => console.log(this.state.shouldReset));
-    }
+        this.setState({ shouldReset: true });
+    };
 
     abortResetApp = () => {
-        this.setState({shouldReset:false});
-    }
+        this.setState({ shouldReset: false });
+    };
 
     hydrateStateWithLocalStorage() {
         // for all items in state
@@ -66,11 +77,11 @@ class App extends Component {
     saveStateToLocalStorage() {
         // for every item in React state
         for (let key in this.state) {
-          // save to localStorage
-          localStorage.setItem(key, JSON.stringify(this.state[key]));
+            // save to localStorage
+            localStorage.setItem(key, JSON.stringify(this.state[key]));
         }
     }
-    
+
     componentDidMount() {
         this.hydrateStateWithLocalStorage();
 
@@ -84,10 +95,10 @@ class App extends Component {
 
     componentWillUnmount() {
         window.removeEventListener(
-          "beforeunload",
-          this.saveStateToLocalStorage.bind(this)
+            "beforeunload",
+            this.saveStateToLocalStorage.bind(this)
         );
-    
+
         // saves if component has a chance to unmount
         this.saveStateToLocalStorage();
     }
@@ -109,39 +120,38 @@ class App extends Component {
             // prevState gives back the state just before the function calls
             // with the concat function we make a new array and add newTask
             // so no data is mutated
-            this.setState(
-                prevState => {
-                    return {
-                        open: [...prevState.open, newTask],
-                        inputText: ""
-                    };
-                }
-            );
+            this.setState(prevState => {
+                return {
+                    open: [...prevState.open, newTask],
+                    inputText: ""
+                };
+            });
         }
     }
 
     deleteTask(e, taskkey, isDone) {
         let index;
         let tasksToModify;
-        if(!isDone) {
+        if (!isDone) {
             index = this.state.open.findIndex(cur => cur.key === taskkey);
             tasksToModify = this.state.open;
-        }
-        else {
+        } else {
             index = this.state.done.findIndex(cur => cur.key === taskkey);
             tasksToModify = this.state.done;
         }
-        if(index === -1) { // should never happen
+        if (index === -1) {
+            // should never happen
             return;
         }
-        tasksToModify = [...tasksToModify.slice(0, index), ...tasksToModify.slice(index+1)];
-        if(isDone) {
-            this.setState({done: tasksToModify})
+        tasksToModify = [
+            ...tasksToModify.slice(0, index),
+            ...tasksToModify.slice(index + 1)
+        ];
+        if (isDone) {
+            this.setState({ done: tasksToModify });
+        } else {
+            this.setState({ open: tasksToModify });
         }
-        else {
-            this.setState({open : tasksToModify})
-        }
-
     }
 
     handleUrgenceSelection(e, taskkey) {
@@ -206,14 +216,12 @@ class App extends Component {
             });
             taskToMove.isDone = !isDone;
             taskToMove.doneBtnText = "undo";
-            this.setState(
-                prevState => {
-                    return {
-                        open: filteredTodos,
-                        done: [...prevState.done, taskToMove]
-                    };
-                }
-            );
+            this.setState(prevState => {
+                return {
+                    open: filteredTodos,
+                    done: [...prevState.done, taskToMove]
+                };
+            });
         } // has to be in done
         else {
             let filteredDones = this.state.done.filter(cur => {
@@ -224,14 +232,12 @@ class App extends Component {
             });
             taskToMove.isDone = !isDone;
             taskToMove.doneBtnText = "done";
-            this.setState(
-                prevState => {
-                    return {
-                        done: filteredDones,
-                        open: [...prevState.open, taskToMove]
-                    };
-                }
-            );
+            this.setState(prevState => {
+                return {
+                    done: filteredDones,
+                    open: [...prevState.open, taskToMove]
+                };
+            });
         }
     }
 
@@ -245,14 +251,6 @@ class App extends Component {
     };
 
     handleUrgenceAreaClicked = () => {};
-
-    getModalStyle() {
-        return {
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-        }
-    }
 
     render() {
         const { classes } = this.props;
@@ -298,27 +296,40 @@ class App extends Component {
                     color="secondary"
                     onClick={this.openResetAppModal}
                 >
-                reset app
+                    reset app
                 </Button>
-                <Modal style={this.getModalStyle()}
+                <Dialog
                     open={this.state.shouldReset}
                     onClose={this.abortResetApp}
-                >   
-                    <div className={classes.resetModal}>
-                        <Typography variant="h6">
-                            Reset Application?
-                        </Typography>
-                        <Typography variant="subtitle1" >
-                            Do you want to really reset the application? There is no going back
-                        </Typography>
-                        </div>
-                </Modal>
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        {"Reset Application?"}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Do you want to really reset the application? There
+                            is no going back
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button
+                            color="primary"
+                            autoFocus
+                            onClick={this.abortResetApp}
+                        >
+                            Disagree
+                        </Button>
+                        <Button color="primary" onClick={this.resetApplication}>
+                            Agree
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         );
     }
 }
 
-const styles = theme => ({
+const styles = {
     root: {
         textAlign: "center"
     },
@@ -341,14 +352,7 @@ const styles = theme => ({
     },
     resetAppBtn: {
         marginTop: "20px"
-    },
-    resetModal: {
-        position: 'absolute',
-        width: theme.spacing.unit * 50,
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing.unit * 4,
     }
-});
+};
 
 export default withStyles(styles)(App);

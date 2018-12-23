@@ -20,6 +20,7 @@
 ☐ drag and drop to sort tasks inside their urgence level @low
     ☐ with grow animation
 
-☐ reset application button 
+✔ reset application button @done(18-12-23 03:30)
     ✔ styling @done(18-12-23 00:20)
-    ☐ (delete all tasks and delete local storage)
+    ✔ (delete all tasks and delete local storage) @done(18-12-23 03:29)
+    ✔ reset app dialogue @done(18-12-23 03:29)
