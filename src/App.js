@@ -33,7 +33,6 @@ class App extends Component {
     }
 
     resetApplication = () => {
-        console.log("reset the app clicked");
         localStorage.clear();
         this.setState({
             open: [],
@@ -271,7 +270,6 @@ class App extends Component {
     };
 
     handleTaskDragStart = (e, taskkey) => {
-        console.log("start task drag");
         // just set to state
         this.setState({
             draggedTask: taskkey
@@ -279,22 +277,40 @@ class App extends Component {
     };
 
     handleTaskDragOver = e => {
-        console.log("dragged over");
         e.preventDefault();
     };
 
     handleTaskDrop = (e, taskkey) => {
-        console.log("end task drag");
         // get taskkey from datatransfer
         let keyDraggedTask = this.state.draggedTask;
-        console.log(key);
-        console.log(taskkey);
         // compare it to the index inside the openTasks
         const indexDraggedTask = this.state.open.findIndex(
             cur => cur.key === keyDraggedTask
         );
+        const indexDroppedOn = this.state.open.findIndex(
+            cur => cur.key === taskkey
+        );
+        if (indexDraggedTask === -1 || indexDroppedOn === -1) {
+            console.error("task dragged/dropped in wrong section");
+            return;
+        }
+
+        // the tasks without the dragged one
+        let sortedTasks = this.state.open.filter(
+            cur => cur.key !== keyDraggedTask
+        );
+
         // drop it before the index
+        sortedTasks.splice(
+            indexDroppedOn,
+            0,
+            this.state.open[indexDraggedTask]
+        );
         // sort
+        this.insertionSort(sortedTasks);
+        this.setState({
+            open: sortedTasks
+        });
     };
 
     render() {
