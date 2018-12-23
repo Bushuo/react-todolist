@@ -250,6 +250,25 @@ class App extends Component {
         this.setState(prevState => ({ showDone: !prevState.showDone }));
     };
 
+    handleDescriptionChange = (e, taskkey) => {
+        const index = this.state.open.findIndex(cur => cur.key === taskkey);
+        if (index === -1) {
+            return; // only sort in open
+        }
+        const newDescription = e.target.value;
+
+        this.setState(({ open }) => ({
+            open: [
+                ...open.slice(0, index),
+                {
+                    ...open[index],
+                    text: newDescription
+                },
+                ...open.slice(index + 1)
+            ]
+        }));
+    };
+
     handleUrgenceAreaClicked = () => {};
 
     render() {
@@ -285,6 +304,7 @@ class App extends Component {
                         handleToggleState={this.handleToggleState}
                         deleteTask={this.deleteTask}
                         handleUrgenceSelection={this.handleUrgenceSelection}
+                        handleDescriptionChange={this.handleDescriptionChange}
                         handleToggleShowDone={this.handleToggleShowDone}
                         showDone={this.state.showDone}
                     />

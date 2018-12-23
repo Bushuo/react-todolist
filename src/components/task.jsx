@@ -2,6 +2,7 @@ import React from "react";
 import { IconButton, Icon } from "@material-ui/core";
 import Radio from "@material-ui/core/Radio";
 import { withStyles } from "@material-ui/core/styles";
+import InputBase from "@material-ui/core/InputBase";
 
 function Task(props) {
     const {
@@ -14,6 +15,7 @@ function Task(props) {
         radioValue,
         handleToggleState,
         handleUrgenceSelection,
+        handleDescriptionChange,
         deleteTask
     } = props;
     return (
@@ -29,7 +31,12 @@ function Task(props) {
                 >
                     <Icon>{delBtnText}</Icon>
                 </IconButton>
-                <div className={classes.description}>{text}</div>
+                <InputBase
+                    className={classes.description}
+                    defaultValue={text}
+                    multiline
+                    onChange={e => handleDescriptionChange(e, id)}
+                />
                 <IconButton
                     className={classes.button}
                     color="primary"
@@ -76,7 +83,6 @@ const styles = {
     container: {
         display: "flex",
         justifyContent: "space-between",
-        paddingLeft: "20px",
         borderRadius: "10px",
         backgroundColor: "rgba(230, 230, 250, 0.5)",
         fontSize: "20px",
@@ -84,7 +90,9 @@ const styles = {
     },
     radioContainer: {},
     description: {
-        alignSelf: "center"
+        fontSize: "20px",
+        color: "gray",
+        width: "100%"
     },
     button: {}
 };

@@ -24,6 +24,7 @@ class TaskList extends Component {
                     radioValue={task.radioValue}
                     handleToggleState={this.props.handleToggleState}
                     handleUrgenceSelection={this.props.handleUrgenceSelection}
+                    handleDescriptionChange={this.props.handleDescriptionChange}
                     deleteTask={this.props.deleteTask}
                 />
             </Grow>
