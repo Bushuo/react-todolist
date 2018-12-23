@@ -24,7 +24,7 @@ function Task(props) {
     return (
         <div
             className={classes.root}
-            draggable
+            draggable={!isDone}
             onDragStart={e => handleTaskDragStart(e, id)}
             onDrop={e => handleTaskDrop(e, id)}
             onDragOver={e => handleTaskDragOver(e)}
@@ -41,6 +41,7 @@ function Task(props) {
                     className={classes.description}
                     defaultValue={text}
                     multiline
+                    readOnly={isDone}
                     onChange={e => handleDescriptionChange(e, id)}
                 />
                 <IconButton
