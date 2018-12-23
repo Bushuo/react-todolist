@@ -16,12 +16,18 @@ function Task(props) {
         handleToggleState,
         handleUrgenceSelection,
         handleDescriptionChange,
-        deleteTask
+        deleteTask,
+        handleTaskDragStart,
+        handleTaskDragOver,
+        handleTaskDragEnd
     } = props;
     return (
         <div
             className={classes.root}
-            onClick={() => console.log("task root clicked")}
+            draggable
+            onDragStart={e => handleTaskDragStart(e, id)}
+            onDragEnd={e => handleTaskDragEnd(e)}
+            onDragOver={e => handleTaskDragOver(e)}
         >
             <div className={classes.container}>
                 <IconButton

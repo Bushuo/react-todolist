@@ -26,6 +26,9 @@ class TaskList extends Component {
                     handleUrgenceSelection={this.props.handleUrgenceSelection}
                     handleDescriptionChange={this.props.handleDescriptionChange}
                     deleteTask={this.props.deleteTask}
+                    handleTaskDragStart={this.props.handleTaskDragStart}
+                    handleTaskDragOver={this.props.handleTaskDragOver}
+                    handleTaskDragEnd={this.props.handleTaskDragEnd}
                 />
             </Grow>
         );

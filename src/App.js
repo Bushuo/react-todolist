@@ -269,7 +269,23 @@ class App extends Component {
         }));
     };
 
-    handleUrgenceAreaClicked = () => {};
+    handleTaskDragStart = () => {
+        console.log("start task drag");
+        // save taskkey to dataTransfer
+    };
+
+    handleTaskDragOver = e => {
+        console.log("dragged over");
+        e.preventDefault();
+    };
+
+    handleTaskDragEnd = () => {
+        console.log("end task drag");
+        // get taskkey from datatransfer
+        // compare it to the index inside the openTasks
+        // drop it before the index
+        // sort
+    };
 
     render() {
         const { classes } = this.props;
@@ -307,6 +323,9 @@ class App extends Component {
                         handleDescriptionChange={this.handleDescriptionChange}
                         handleToggleShowDone={this.handleToggleShowDone}
                         showDone={this.state.showDone}
+                        handleTaskDragStart={this.handleTaskDragStart}
+                        handleTaskDragOver={this.handleTaskDragOver}
+                        handleTaskDragEnd={this.handleTaskDragEnd}
                     />
                 </div>
                 <Button
