@@ -11,6 +11,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 import NavBar from "./components/navbar";
 import TaskList from "./components/taskList";
+import Footer from "./components/footer";
 
 class App extends Component {
     constructor(props) {
@@ -389,6 +390,7 @@ class App extends Component {
                         </Button>
                     </DialogActions>
                 </Dialog>
+                <Footer />
             </div>
         );
     }
