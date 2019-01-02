@@ -8,10 +8,22 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { withStyles } from "@material-ui/core/styles";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 import NavBar from "./components/navbar";
 import TaskList from "./components/taskList";
 import Footer from "./components/footer";
+
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: "#263238"
+        },
+        secondary: {
+            main: "#fe5f55"
+        }
+    }
+});
 
 class App extends Component {
     constructor(props) {
@@ -317,81 +329,88 @@ class App extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <div className={classes.root}>
-                <NavBar />
-                <div className={classes.wrapper}>
-                    <form
-                        className={classes.inputContainer}
-                        onSubmit={this.addTask}
-                    >
-                        <Input
-                            className={classes.inputText}
-                            value={this.state.inputText}
-                            placeholder="new task"
-                            onChange={e => this.handleInputText(e)}
-                        />
-                        <div className={classes.inputButtonContainer}>
-                            <Button
-                                type="submit"
-                                children=""
-                                variant="contained"
-                                color="primary"
-                            >
-                                add
-                            </Button>
-                        </div>
-                    </form>
-                    <TaskList
-                        openTasks={this.state.open}
-                        doneTasks={this.state.done}
-                        handleToggleState={this.handleToggleState}
-                        deleteTask={this.deleteTask}
-                        handleUrgenceSelection={this.handleUrgenceSelection}
-                        handleDescriptionChange={this.handleDescriptionChange}
-                        handleToggleShowDone={this.handleToggleShowDone}
-                        showDone={this.state.showDone}
-                        handleTaskDragStart={this.handleTaskDragStart}
-                        handleTaskDragOver={this.handleTaskDragOver}
-                        handleTaskDrop={this.handleTaskDrop}
-                    />
-                </div>
-                <Button
-                    className={classes.resetAppBtn}
-                    children=""
-                    variant="outlined"
-                    color="secondary"
-                    onClick={this.openResetAppModal}
-                >
-                    reset app
-                </Button>
-                <Dialog
-                    open={this.state.shouldReset}
-                    onClose={this.abortResetApp}
-                >
-                    <DialogTitle id="alert-dialog-title">
-                        {"Reset Application?"}
-                    </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            Do you want to really reset the application? There
-                            is no going back
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button
-                            color="primary"
-                            autoFocus
-                            onClick={this.abortResetApp}
+            <MuiThemeProvider theme={theme}>
+                <div className={classes.root}>
+                    <NavBar />
+                    <div className={classes.wrapper}>
+                        <form
+                            className={classes.inputContainer}
+                            onSubmit={this.addTask}
                         >
-                            Disagree
-                        </Button>
-                        <Button color="primary" onClick={this.resetApplication}>
-                            Agree
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-                <Footer />
-            </div>
+                            <Input
+                                className={classes.inputText}
+                                value={this.state.inputText}
+                                placeholder="new task"
+                                onChange={e => this.handleInputText(e)}
+                            />
+                            <div className={classes.inputButtonContainer}>
+                                <Button
+                                    type="submit"
+                                    children=""
+                                    variant="contained"
+                                    color="primary"
+                                >
+                                    add
+                                </Button>
+                            </div>
+                        </form>
+                        <TaskList
+                            openTasks={this.state.open}
+                            doneTasks={this.state.done}
+                            handleToggleState={this.handleToggleState}
+                            deleteTask={this.deleteTask}
+                            handleUrgenceSelection={this.handleUrgenceSelection}
+                            handleDescriptionChange={
+                                this.handleDescriptionChange
+                            }
+                            handleToggleShowDone={this.handleToggleShowDone}
+                            showDone={this.state.showDone}
+                            handleTaskDragStart={this.handleTaskDragStart}
+                            handleTaskDragOver={this.handleTaskDragOver}
+                            handleTaskDrop={this.handleTaskDrop}
+                        />
+                    </div>
+                    <Button
+                        className={classes.resetAppBtn}
+                        children=""
+                        variant="outlined"
+                        color="secondary"
+                        onClick={this.openResetAppModal}
+                    >
+                        reset app
+                    </Button>
+                    <Dialog
+                        open={this.state.shouldReset}
+                        onClose={this.abortResetApp}
+                    >
+                        <DialogTitle id="alert-dialog-title">
+                            {"Reset Application?"}
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                Do you want to really reset the application?
+                                There is no going back
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button
+                                color="primary"
+                                autoFocus
+                                onClick={this.abortResetApp}
+                            >
+                                Disagree
+                            </Button>
+                            <Button
+                                color="primary"
+                                onClick={this.resetApplication}
+                            >
+                                Agree
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                    <Footer />
+                </div>
+            </MuiThemeProvider>
         );
     }
 }

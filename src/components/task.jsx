@@ -23,7 +23,9 @@ function Task(props) {
     } = props;
     return (
         <div
-            className={classes.root}
+            className={
+                isDone ? classes.root + " " + classes.done : classes.root
+            }
             draggable={!isDone}
             onDragStart={e => handleTaskDragStart(e, id)}
             onDrop={e => handleTaskDrop(e, id)}
@@ -52,28 +54,28 @@ function Task(props) {
                     <Icon>{doneBtnText}</Icon>
                 </IconButton>
             </div>
-
+            <hr />
             <div className={classes.radioContainer}>
                 <Radio
-                    color="primary"
                     value="1"
                     checked={radioValue === "1"}
                     onChange={e => handleUrgenceSelection(e, id)}
                     disabled={isDone === true}
+                    color="secondary"
                 />
                 <Radio
-                    color="secondary"
                     value="2"
                     checked={radioValue === "2"}
                     onChange={e => handleUrgenceSelection(e, id)}
                     disabled={isDone === true}
+                    color="secondary"
                 />
                 <Radio
-                    color="default"
                     value="3"
                     checked={radioValue === "3"}
                     onChange={e => handleUrgenceSelection(e, id)}
                     disabled={isDone === true}
+                    color="secondary"
                 />
             </div>
         </div>
@@ -85,15 +87,18 @@ const styles = {
         marginTop: "10px",
         marginBottom: "10px",
         borderRadius: "10px",
-        border: "solid 1px lightgrey"
+        border: "solid 1px lightgrey",
+        backgroundColor: "rgba(254, 95, 85, 0.1)"
     },
     container: {
         display: "flex",
         justifyContent: "space-between",
         borderRadius: "10px",
-        backgroundColor: "rgba(230, 230, 250, 0.5)",
         fontSize: "20px",
         color: "gray"
+    },
+    done: {
+        backgroundColor: "#eee"
     },
     radioContainer: {},
     description: {

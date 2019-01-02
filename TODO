@@ -17,7 +17,7 @@
 
 ☐ grow animation on sort
 
-☐ drag and drop to sort tasks inside their urgence level @low
+✔ drag and drop to sort tasks inside their urgence level @low @done(18-12-25 22:47)
     ☐ with grow animation
 
 ✔ reset application button @done(18-12-23 03:30)
@@ -26,3 +26,5 @@
     ✔ reset app dialogue @done(18-12-23 03:29)
 
 ✔ editable multiline task description @done(18-12-23 15:30)
+
+☐ info how to use the app
