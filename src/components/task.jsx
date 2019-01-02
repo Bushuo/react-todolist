@@ -104,7 +104,7 @@ const styles = {
     description: {
         fontSize: "20px",
         color: "gray",
-        width: "100%"
+        width: "70%"
     },
     button: {}
 };
